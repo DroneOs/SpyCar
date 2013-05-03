@@ -1,0 +1,6 @@
+      [paste.app_factory]
+      main = spycar:main
+      [console_scripts]
+      populate_spycar = spycar.scripts.populate:main
+      spycar_newapp = spycar.scripts.newapp:main
+      
