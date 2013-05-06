@@ -1,0 +1,31 @@
+COORDINATES:
+1)  x is latitude and y is longitude.
+2)	Degrees latitude are numbered from 0° to 90° north and south.
+3)	The longitude degrees continue 180° east and 180° west.
+
+
+LATITUDES:
+A change in latitude of:                                 Means a change in distance of:
+ 
+1 degrees (N OR S)	69 miles or 111 km
+0.1 degrees (N OR S)	6.9 miles
+0.01 degrees (N OR S)	0.69 miles
+
+Degrees= 1 means distance = 111km
+IF we take meters:
+Degrees= 0.001 means distance=111 meters
+Degrees=0.00001 means distance=1.11meter
+Or:
+(0 degrees, 0 minutes, 0.036 seconds = 1.11 meter)
+
+Changes in latitude remains same at all LATITUDES.
+
+
+LONGITUDES:
+A change in the longitude of 1 degree (E OR W) at this LATITUDE:    Means a change in distance 
+
+0 degrees (equator)	69 miles
+20 degrees north	65 miles
+40 degrees north	53 miles
+60 degrees north	35 miles
+80 degrees north	12 miles
