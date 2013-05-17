@@ -20,18 +20,11 @@ def say_hello(request):
   
   results1=[]
   results2=[]
+  results3=[]
   
   file2=str(file2);
   file1=str(file1);
   file3=str(file3);
-  
-  
-
-  
-  
-  
-  
-  
   
   # To get latitudes in a list
   
@@ -53,37 +46,67 @@ def say_hello(request):
       testing2=file2[index_1+1:index_2]
       results2.append(testing2)
     index_1=file2.find(" ", index_2)
-   
-    
-  
-  
-  
-  
-  
+     
+# to get direction
+
+  #while -1!=index_1:
+   # p1=file2[index_1]
+    #p2=file2[index_1+1]
+    #if p1 < p2:
+     # direct="Towards East"
+    #else:
+     # direct="towards West"
+    #results3.append(direct)
+    #index_1=file2.find(" ", index_2)
       
-    
-    
-    
-    
-        
-            
- 
+  
   
   model1=path(name=file3)
   DBSession.add(model1)
   a = DBSession.query(path.id).order_by(path.id.desc()).first()
-  index=0;
+  index=0; 
   for index in range(len(results1)):
-    aqsa= coordinates(Point="P_"+str(index), latitude= float(results1[index]), longitude=float(results2[index]), path_id=a.id)
+    
+    #code for Direction
+    
+    
+    lat1=float(results1[index])
+    lon1=float(results2[index])
+    
+    lat2=results1[index+1:index]
+    lon2=results2[index+1:index]
+    
+    
+    
+    
+    if (lat1 < lat2 and lon1 < lon2):
+      direct="Moving from North towards East"
+    elif (lat1 > lat2 and lon1 < lon2):
+      direct="Moving from East towards South"
+      #Problemmmmm
+    elif (lon1 > lon2 and lat1 > lat2):
+      direct="From south towards West"
+    elif (lon1 > lon2 and lat1 < lat2):
+      direct="From west towards North"
+    else:
+      direct="Moving in right direction"
+    results3.append(direct)
+      
+    aqsa= coordinates(Point="P_"+str(index), latitude= float(results1[index]), longitude=float(results2[index]), path_id=a.id, direction=results3[index])
     DBSession.add(aqsa)
+    
+  acc2 = DBSession.query(coordinates).all()
+  return {'acc2':acc2}
+    
+    #direction=str(results3[index])
+    
+    
   #model = path(name= file1)
   #DBSession.add(model)
-  acc2 = DBSession.query(coordinates).all()
-  return {'acc2':acc2}  
     
-    
-  #return {'file1':results2}
   
+    
+    #return {'results2':results2}
   
   
 @view_config(route_name='savings', renderer='savings.mako')   
@@ -91,6 +114,12 @@ def my_savings(request):
     acc2 = DBSession.query(coordinates).all()
     
     return {'acc2':acc2}  
+    
+    
+#@view_config(route_name='direction', renderer='direction.mako')
+#def my_directions(request):
+ # acc2=DBSession.query(coordinates).all()
+ #acc2=dbsession.querry(coordinates).all()
     
     
     
@@ -110,9 +139,7 @@ def test(request):
   str1=str1+1;
   return {'str1':str1}
 
-    
-    
-    
+     
     
     
     
@@ -122,8 +149,6 @@ def my_savings1(request):
     
     return {'acc2':acc2}      
     
-  
-  
 
 @view_config(route_name='home', renderer='home.mako')
 def my_view(request):

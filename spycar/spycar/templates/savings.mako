@@ -6,6 +6,7 @@
 <th width="100">POINT NUM </th>
 <th width="200">LATITUDE</th>
 <th width="200">LONGITUDE</th>
+<th width="200">Direction</th>
 </tr>
 </table>
 
@@ -33,6 +34,11 @@
 <td width="200">
 <h3>&nbsp;&nbsp;${category.longitude}</h3>
 </td>
+
+<td width="300">
+<h3>&nbsp;&nbsp;&nbsp;${category.direction}</h3>
+</td>
+
 </tr>
 </table>
 

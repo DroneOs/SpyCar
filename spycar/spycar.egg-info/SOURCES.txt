@@ -47,12 +47,17 @@ spycar/static/transparent.gif
 spycar/static/usernamefield.png
 spycar/templates/base.mako
 spycar/templates/contact.mako
+spycar/templates/hello.mako
 spycar/templates/home.mako
+spycar/templates/map.mako
 spycar/templates/pyckauth_base.mako
 spycar/templates/pyckauth_login.mako
 spycar/templates/pyckauth_manager.mako
 spycar/templates/pyckauth_permissions.mako
 spycar/templates/pyckauth_routes.mako
 spycar/templates/pyckauth_users.mako
+spycar/templates/savings.mako
+spycar/templates/savings1.mako
+spycar/templates/test.mako
 spycar/tests/__init__.py
 spycar/tests/tests.py

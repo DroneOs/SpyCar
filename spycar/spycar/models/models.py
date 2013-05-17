@@ -26,6 +26,7 @@ class coordinates(Base):
   Point=Column(Unicode(200))
   latitude=Column(Unicode(200))
   longitude=Column(Unicode(200))
+  direction=Column(Unicode(200))
   
   #paths=relationship(path, backref=backref("Coordinates"))
   
