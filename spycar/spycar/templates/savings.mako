@@ -7,9 +7,9 @@
 <th width="200">LATITUDE</th>
 <th width="200">LONGITUDE</th>
 <th width="300">DIRECTION</th>
-<th width="300">DECIAML_DEGREE</th>
+<th width="300">ANGLE</th>
 <th width="200">DMS</th>
-
+<th width="200">DISTANCE</th>
 
 </tr>
 </table>
@@ -42,6 +42,10 @@
 
 <td width="200">
 <h3>&nbsp;&nbsp;${category.degrees}, ${category.minutes}, ${category.seconds}</h3>
+</td>
+
+<td width="300">
+<h3>&nbsp;&nbsp;${category.distance}</h3>
 </td>
 
 </tr>

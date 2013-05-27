@@ -1,6 +1,6 @@
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
-from math import degrees, atan2
+from math import degrees, atan2, sqrt
 from decimal import *
 import math
 import string
@@ -106,13 +106,18 @@ def say_hello(request):
     
     # Rounds seconds
     sec=int(sec * 10) / 10.0
+    
+    # Calculating Distance
+    
+    dist = sqrt( (lat2 - lat1)**2 + (long2 - long1)**2 )
+
+
    
     # Code for database insertion 
     results3.append(direct)
-    #results4.append(dist)
     lat1=lat2
     long1=long2
-    aqsa= coordinates(Point="P_"+str(index), latitude= float(results1[index]), longitude=float(results2[index]), path_id=a.id, direction=results3[index], decimal_degree=angle,degrees=deg, minutes=minut, seconds=sec)
+    aqsa= coordinates(Point="P_"+str(index), latitude= float(results1[index]), longitude=float(results2[index]), path_id=a.id, direction=results3[index], decimal_degree=angle,degrees=deg, minutes=minut, seconds=sec, distance=dist)
     DBSession.add(aqsa)
 
     
