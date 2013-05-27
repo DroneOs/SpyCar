@@ -1,5 +1,8 @@
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
+from math import degrees, atan2
+from decimal import *
+import math
 import string
 import urllib
 import re
@@ -21,6 +24,7 @@ def say_hello(request):
   results1=[]
   results2=[]
   results3=[]
+  #results4=[]
   
   file2=str(file2);
   file1=str(file1);
@@ -46,80 +50,82 @@ def say_hello(request):
       testing2=file2[index_1+1:index_2]
       results2.append(testing2)
     index_1=file2.find(" ", index_2)
-     
-# to get direction
 
-  #while -1!=index_1:
-   # p1=file2[index_1]
-    #p2=file2[index_1+1]
-    #if p1 < p2:
-     # direct="Towards East"
-    #else:
-     # direct="towards West"
-    #results3.append(direct)
-    #index_1=file2.find(" ", index_2)
-      
-  
   
   model1=path(name=file3)
   DBSession.add(model1)
   a = DBSession.query(path.id).order_by(path.id.desc()).first()
-  index=0; 
+  index=0;
+  lat1=results1[index]
+  long1=results2[index]
+
+  
+  
   for index in range(len(results1)):
-    
-    #code for Direction
-    
-    
-    lat1=float(results1[index])
-    lon1=float(results2[index])
-    
-    lat2=results1[index+1:index]
-    lon2=results2[index+1:index]
-    
-    
-    
-    
-    if (lat1 < lat2 and lon1 < lon2):
-      direct="Moving from North towards East"
-    elif (lat1 > lat2 and lon1 < lon2):
-      direct="Moving from East towards South"
-      #Problemmmmm
-    elif (lon1 > lon2 and lat1 > lat2):
-      direct="From south towards West"
-    elif (lon1 > lon2 and lat1 < lat2):
-      direct="From west towards North"
-    else:
-      direct="Moving in right direction"
-    results3.append(direct)
+    # Code for retrieving points at index2
+    lt2=results1[index+1:]
+    lg2=results2[index+1:]
+    for l2 in lt2:
+      lat2=l2;
+      break;
+    for ln2 in lg2:
+      long2=ln2;
+      break;
       
-    aqsa= coordinates(Point="P_"+str(index), latitude= float(results1[index]), longitude=float(results2[index]), path_id=a.id, direction=results3[index])
+  #evaluating direction for points
+  
+    lat1=float(lat1)
+    lat2=float(lat2)
+    long1=float(long1)
+    long2=float(long2)
+  
+    if (lat1 < lat2 and long1 < long2):
+	direct="Towards North East"
+    elif (lat1 > lat2 and long1 < long2):
+	direct="Towards South East"
+    elif (lat1 > lat2 and long1 > long2):
+	direct="Towards South West"
+    elif (lat1 < lat2 and long1 > long2):
+	direct="Towards North West"
+    else:
+	direct="Moving in right direction"
+	
+    
+    # Code for calculating angle
+    dx=lat2-lat1
+    dy=long2-long1
+    angle = degrees(atan2(dy, dx))
+    #b1 = (angle + 360) % 360
+    #b2 = (90 - angle) % 360
+    
+    # Conversion form decimal fraction to DMS-Format
+    deg = int(angle)
+    temp = 60 * (angle - deg)
+    minut = int(temp)
+    sec = 60 * (temp - minut)
+    
+    # Rounds seconds
+    sec=int(sec * 10) / 10.0
+   
+    # Code for database insertion 
+    results3.append(direct)
+    #results4.append(dist)
+    lat1=lat2
+    long1=long2
+    aqsa= coordinates(Point="P_"+str(index), latitude= float(results1[index]), longitude=float(results2[index]), path_id=a.id, direction=results3[index], decimal_degree=angle,degrees=deg, minutes=minut, seconds=sec)
     DBSession.add(aqsa)
+
     
+    #distance=results4[index]
   acc2 = DBSession.query(coordinates).all()
-  return {'acc2':acc2}
-    
-    #direction=str(results3[index])
-    
-    
-  #model = path(name= file1)
-  #DBSession.add(model)
-    
-  
-    
-    #return {'results2':results2}
-  
+  return {'acc2':acc2}  
+ 
   
 @view_config(route_name='savings', renderer='savings.mako')   
 def my_savings(request):
     acc2 = DBSession.query(coordinates).all()
     
     return {'acc2':acc2}  
-    
-    
-#@view_config(route_name='direction', renderer='direction.mako')
-#def my_directions(request):
- # acc2=DBSession.query(coordinates).all()
- #acc2=dbsession.querry(coordinates).all()
     
     
     
@@ -139,7 +145,9 @@ def test(request):
   str1=str1+1;
   return {'str1':str1}
 
-     
+    
+    
+    
     
     
     
@@ -149,6 +157,8 @@ def my_savings1(request):
     
     return {'acc2':acc2}      
     
+  
+  
 
 @view_config(route_name='home', renderer='home.mako')
 def my_view(request):
