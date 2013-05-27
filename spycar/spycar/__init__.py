@@ -36,7 +36,7 @@ def main(global_config, **settings):
     config.add_route('savings1', '/savings1')
     config.add_route('map', '/')
     config.add_route('test', '/test')
-    #config.add_route('direction', '/direction')
+
     config.add_route('pyckauth_login', '/login')
     config.add_route('pyckauth_logout', '/logout')
     config.add_route('pyckauth_manager', '/auth')

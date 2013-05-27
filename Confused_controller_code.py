@@ -1,8 +1,5 @@
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
-from math import degrees, atan2, sqrt
-from decimal import *
-import math
 import string
 import urllib
 import re
@@ -24,7 +21,7 @@ def say_hello(request):
   results1=[]
   results2=[]
   results3=[]
-  #results4=[]
+  results4=[]
   
   file2=str(file2);
   file1=str(file1);
@@ -52,6 +49,9 @@ def say_hello(request):
     index_1=file2.find(" ", index_2)
 
   
+  
+  
+  
   model1=path(name=file3)
   DBSession.add(model1)
   a = DBSession.query(path.id).order_by(path.id.desc()).first()
@@ -59,10 +59,31 @@ def say_hello(request):
   lat1=results1[index]
   long1=results2[index]
 
+  #class dirr(object):
+
+
+  # to get second latitude
+   # def get_second_lat(self,index):
+    #  for l2 in results1[index+1:]:
+      #l2=l
+     #   break;
+      #return {'l2':l2}
+  
+  # to get second longitude
+  
+    #def get_second_long(self,index):
+     # for l2 in results2[index+1:]:
+      #l3=l
+      #  break;
+      #return {'l2':l2}
   
   
   for index in range(len(results1)):
-    # Code for retrieving points at index2
+    # code for direction
+    #d=dirr()
+    #lat2=d.get_second_lat(index)
+    #long2=d.get_second_long(index)
+    
     lt2=results1[index+1:]
     lg2=results2[index+1:]
     for l2 in lt2:
@@ -72,56 +93,30 @@ def say_hello(request):
       long2=ln2;
       break;
       
-  #evaluating direction for points
-  
-    lat1=float(lat1)
-    lat2=float(lat2)
-    long1=float(long1)
-    long2=float(long2)
-  
+      
     if (lat1 < lat2 and long1 < long2):
-	direct="Towards North East"
+	direct="From North towards East"
+	dist=float(lat1) - float(lat2)
     elif (lat1 > lat2 and long1 < long2):
-	direct="Towards South East"
+	direct="From East towards South"
+	dist=float(lat1) - float(lat2)
     elif (lat1 > lat2 and long1 > long2):
-	direct="Towards South West"
+	direct="From south towards West"
+	dist=float(lat1) - float(lat2)
     elif (lat1 < lat2 and long1 > long2):
-	direct="Towards North West"
+	direct="From west towards North"
+	dist=float(lat1) - float(lat2)
     else:
 	direct="Moving in right direction"
-	
-    
-    # Code for calculating angle
-    dx=lat2-lat1
-    dy=long2-long1
-    angle = degrees(atan2(dy, dx))
-    #b1 = (angle + 360) % 360
-    #b2 = (90 - angle) % 360
-    
-    # Conversion form decimal fraction to DMS-Format
-    deg = int(angle)
-    temp = 60 * (angle - deg)
-    minut = int(temp)
-    sec = 60 * (temp - minut)
-    
-    # Rounds seconds
-    sec=int(sec * 10) / 10.0
-    
-    # Calculating Distance
-    
-    dist = sqrt( (lat2 - lat1)**2 + (long2 - long1)**2 )
-
-
-   
-    # Code for database insertion 
+	dist=0 
+      
     results3.append(direct)
+    results4.append(dist)
     lat1=lat2
     long1=long2
-    aqsa= coordinates(Point="P_"+str(index), latitude= float(results1[index]), longitude=float(results2[index]), path_id=a.id, direction=results3[index], decimal_degree=angle,degrees=deg, minutes=minut, seconds=sec, distance=dist)
+    aqsa= coordinates(Point="P_"+str(index), latitude= float(results1[index]), longitude=float(results2[index]), path_id=a.id, direction=results3[index], distance=results4[index])
     DBSession.add(aqsa)
 
-    
-    #distance=results4[index]
   acc2 = DBSession.query(coordinates).all()
   return {'acc2':acc2}  
  

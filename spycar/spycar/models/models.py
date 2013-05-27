@@ -27,6 +27,11 @@ class coordinates(Base):
   latitude=Column(Unicode(200))
   longitude=Column(Unicode(200))
   direction=Column(Unicode(200))
+  distance=Column(Unicode(200))
+  decimal_degree=Column(Unicode(200))
+  degrees=Column(Unicode(200))
+  minutes=Column(Unicode(200))
+  seconds=Column(Unicode(200))
   
   #paths=relationship(path, backref=backref("Coordinates"))
   

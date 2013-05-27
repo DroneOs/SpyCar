@@ -1,0 +1,18 @@
+Coordinates: Latitude,Longitude
+
+//Both are given in decimal degrees nd we have to convert them to "Degrees, Minutes, Seconds" format
+
+Coordinates Given: 41.40338, 2.17403
+Latitude=41.40338
+41.40338	0.40338*60=24.2028
+41 24.2028	0.2028*60=12.168
+41 24 12.168
+
+41 degrees, 24 minutes and 12.168 seconds= 41.40338
+
+Longitude:2.17403
+2.17403		0.17403*60=10.4418
+2 10.4418	0.4418*60=26.508
+2 10 26.508
+
+2 degrees, 10 minutes and 26.508 seconds= 2.17403
