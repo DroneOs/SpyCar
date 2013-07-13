@@ -19,28 +19,12 @@ function initialize() {
  
  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-var startLL = new google.maps.LatLng(33.6866390732609,73.0680084228516);
-var endLL = new google.maps.geometry.spherical.computeOffset(startLL, 7.59304641542449*1000, 90.7978595334544);
- var coordinates = [startLL, endLL];
-
-
-  var flightPlanCoordinates = [
+ var flightPlanCoordinates = [
       new google.maps.LatLng(33.6866390732609, 73.0680084228516),
       new google.maps.LatLng(33.6054963728914, 73.1500625610352),
-      
-      
+      new google.maps.LatLng(33.6054963728914, 73.1000625610352),
+      new google.maps.LatLng(33.6854963728914, 73.0600625610352),
   ];
-
-
-//  var flightPath = new google.maps.Polyline({
-//     path:coordinates ,
-//     strokeColor: '#00FF00',
-//     strokeOpacity: 1.0,
-//     strokeWeight: 2
-//   });
-// 
-//   flightPath.setMap(map);
-
 
 
 var flightPat = new google.maps.Polyline({
@@ -63,5 +47,3 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 </body>
 </html>
-
- 
