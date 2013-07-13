@@ -11,6 +11,7 @@
 <th width="200">DMS</th>
 <th width="200">DISTANCE</th>
 
+
 </tr>
 </table>
 
@@ -44,8 +45,8 @@
 <h3>&nbsp;&nbsp;${category.degrees}, ${category.minutes}, ${category.seconds}</h3>
 </td>
 
-<td width="300">
-<h3>&nbsp;&nbsp;${category.distance}</h3>
+<td width="200">
+<h3>&nbsp;&nbsp;${category.distcalc} </h3>
 </td>
 
 </tr>

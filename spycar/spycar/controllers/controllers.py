@@ -1,6 +1,6 @@
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
-from math import degrees, atan2, sqrt
+from math import degrees, atan2
 from decimal import *
 import math
 import string
@@ -14,6 +14,36 @@ from ..models import (
     )
 
 from ..forms import ContactForm
+
+
+
+
+def calculate_distance(latitude1, latitude2, longitude1, longitude2):
+      
+    
+     
+    # HAVERSINE FORMULA: 
+      R = 6371; 
+      latitude1 = math.radians(latitude1);
+      latitude2= math.radians(latitude2);
+      longitude1 = math.radians(longitude1);
+      longitude2 = math.radians(longitude2);
+      angle = math.atan2(longitude2 - longitude1, latitude2 - latitude1) * 180/3.14159265;
+      dLat = (latitude2-latitude1);
+      dLon = (longitude2-longitude1);
+      latt1 = latitude1;
+      latt2 = latitude2;
+      arr = math.sin(dLat/2) * math.sin(dLat/2) +math.sin(dLon/2) * math.sin(dLon/2) * math.cos(latt1) * math.cos(latt2);
+      c = 2 * atan2(math.sqrt(arr), math.sqrt(1-arr)); 
+      d = float(R * c);
+      return d;
+
+
+
+
+
+
+
 @view_config(route_name='hello', renderer='hello.mako')
 def say_hello(request):
   file1=request.POST['formvar'];
@@ -107,17 +137,31 @@ def say_hello(request):
     # Rounds seconds
     sec=int(sec * 10) / 10.0
     
-    # Calculating Distance
     
-    dist = sqrt( (lat2 - lat1)**2 + (long2 - long1)**2 )
-
-
-   
+    
+    
+    latitude1=lat1;
+    latitude2=lat2;
+    longitude1=long1;
+    longitude2=long2;
+    # PYTHAGORES THEOREM
+    #latitude1=latitude2-latitude1; 
+    #longitude1=longitude2-longitude1;
+    #latitude1=latitude1*latitude1;
+    #longitude1=longitude1*longitude1;
+    #d=math.sqrt(latitude1+longitude1);
+    
+    
+    
+    #for calculating distance between ponits:  
+      
+    d=calculate_distance(latitude1, latitude2, longitude1, longitude2);
     # Code for database insertion 
     results3.append(direct)
+    #results4.append(dist)
     lat1=lat2
     long1=long2
-    aqsa= coordinates(Point="P_"+str(index), latitude= float(results1[index]), longitude=float(results2[index]), path_id=a.id, direction=results3[index], decimal_degree=angle,degrees=deg, minutes=minut, seconds=sec, distance=dist)
+    aqsa= coordinates(Point="P_"+str(index), latitude= float(results1[index]), longitude=float(results2[index]), path_id=a.id, direction=results3[index], decimal_degree=angle,degrees=deg, minutes=minut, seconds=sec, distcalc=d)
     DBSession.add(aqsa)
 
     
@@ -145,11 +189,26 @@ def my_map(request):
     
 @view_config(route_name='test', renderer='test.mako')   
 def test(request):
-  str1="1245.0";
-  str1=float(str1);
-  str1=str1+1;
-  return {'str1':str1}
-
+  R=6371;
+  latitude1= 33.6623534223548;
+  latitude2= 33.5977488143793;
+  longitude1=73.1740951538086;
+  longitude2=73.0522155761719;
+  latitude1 = math.radians(latitude1);
+  latitude2= math.radians(latitude2);
+  longitude1 = math.radians(longitude1);
+  longitude2 = math.radians(longitude2);
+  angle = math.atan2(longitude2 - longitude1, latitude2 - latitude1) * 180/3.14159265;
+  dLat = (latitude2-latitude1);
+  dLon = (longitude2-longitude1);
+  latt1 = latitude1;
+  latt2 = latitude2;
+  arr = math.sin(dLat/2) * math.sin(dLat/2) +math.sin(dLon/2) * math.sin(dLon/2) * math.cos(latt1) * math.cos(latt2);
+  c = 2 * atan2(math.sqrt(arr), math.sqrt(1-arr)); 
+  d = float(R * c);
+  
+  return {'angle':angle}
+  
     
     
     
